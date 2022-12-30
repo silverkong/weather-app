@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import "./App.css";
 import WeatherInfo from "./component/WeatherInfo";
 import WeatherButton from "./component/WeatherButton";
@@ -14,6 +15,7 @@ import background from "./images/background.jpg";
 const weatherAPIKey = process.env.REACT_APP_WEATHER_API;
 
 function App() {
+  const [loading, setLoading] = useState(false);
   const [weather, setWeather] = useState(null);
   // 자식에게 줄 state도 app에 지정
   const [city, setCity] = useState("");
@@ -22,17 +24,29 @@ function App() {
   // 현재 위치에 대한 날씨 정보
   const getWeatherByCurrentLocation = async (lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherAPIKey}&units=metric`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
+    setLoading(false);
   };
 
   // 선택한 city에 대한 날씨 정보
   const getWeatherByCity = async (city) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherAPIKey}&units=metric`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
+    setLoading(false);
+  };
+
+  const handleCityChange = (city) => {
+    if (city === "current") {
+      setCity("");
+    } else {
+      setCity(city);
+    }
   };
 
   // useEffect의 배열 안에 아무것도 없으면 componentDidMount : render 하자마자 실행
@@ -57,8 +71,19 @@ function App() {
   return (
     <div className="wrap">
       <img src={background} className="background" alt="" />
-      <WeatherInfo weather={weather} />
-      <WeatherButton cities={cities} setCity={setCity} />
+      {/* 조건으로 UI 설정 */}
+      {loading ? (
+        <ClipLoader color="#6495ed" loading={loading} size={150} />
+      ) : (
+        <div>
+          <WeatherInfo weather={weather} />
+          <WeatherButton
+            cities={cities}
+            selectedCity={city}
+            handleCityChange={handleCityChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
