@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* 전체 wrap */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100vh;
+  color: #222222;
+  overflow: hidden;
+}
+
+/* background 지정 */
+.background {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+/* WeatherInfo */
+.box_weather_info {
+  width: 600px;
+  height: 300px;
+  padding: 60px;
+  background-color: #ffffff6a;
+  border: 1px solid #ffffff;
+  border-radius: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.box_weather_info .txt_location {
+  color: #666666;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.box_weather_info .txt_temperature {
+  margin-top: 35px;
+  color: royalblue;
+  font-size: 50px;
+  font-weight: 600;
+}
+.box_weather_info .txt_description {
+  margin-top: 10px;
+  color: cornflowerblue;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+/* button */
+.btn_wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 600px;
+  height: 50px;
+}
+
+.btn {
+  width: wrap-content;
+  height: 50px;
+  padding: 0 20px;
+  background-color: cornflowerblue;
+  border: 1px solid royalblue;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 18px;
+}
