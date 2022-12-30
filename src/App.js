@@ -6,25 +6,20 @@ import WeatherButton from "./component/WeatherButton";
 
 import background from "./images/background.jpg";
 
-// 1. 앱이 실행되자마자 현재 위치 기반의 날씨가 보임
-// 2. 날씨 정보에는 도시, 섭씨, 화씨, 날씨 상태가 보임
-// 3. 5개의 버튼이 있음 (현재 위치, 4개의 다른 도시)
-// 4. 도시 버튼을 클릭할 때마다 도시별 날씨가 나옴
-// 5. 현재 위치 버튼을 누르면 다시 현재 위치 기반의 날씨가 보임
-// 6. 데이터를 들고 오는 동안 로딩 스피너가 돎
+// API Key 불러오기
 const weatherAPIKey = process.env.REACT_APP_WEATHER_API;
+// 보고싶은 도시 지정
+const cities = ["Tokyo", "Berlin", "Moscow", "Seoul"];
 
 function App() {
   const [loading, setLoading] = useState(false);
   const [weather, setWeather] = useState(null);
-  // 자식에게 줄 state도 app에 지정
+  // 자식에게 줄 state도 app에 지정해야 부모와 자식이 같이 사용 가능
   const [city, setCity] = useState("");
-  const cities = ["Tokyo", "Berlin", "Moscow", "Seoul"];
 
   // 현재 위치에 대한 날씨 정보
   const getWeatherByCurrentLocation = async (lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherAPIKey}&units=metric`;
-    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
@@ -34,7 +29,6 @@ function App() {
   // 선택한 city에 대한 날씨 정보
   const getWeatherByCity = async (city) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherAPIKey}&units=metric`;
-    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
     setWeather(data);
@@ -62,8 +56,10 @@ function App() {
     };
     // useEffect가 두 개 있으면 두 번 실행되어 오류 발생 > 조건문으로 역할을 다르게 수행
     if (city === "") {
+      setLoading(true);
       getCurrentLocation();
     } else {
+      setLoading(true);
       getWeatherByCity(city);
     }
   }, [city]);
