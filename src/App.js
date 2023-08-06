@@ -25,7 +25,6 @@ function App() {
     let data = await response.json();
     setWeather(data);
     setLoading(false);
-    console.log(data);
   };
 
   // 선택한 city에 대한 날씨 정보
