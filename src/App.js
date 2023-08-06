@@ -8,6 +8,7 @@ import background from "./images/background.jpg";
 
 // API Key 불러오기
 const weatherAPIKey = process.env.REACT_APP_WEATHER_API;
+
 // 보고싶은 도시 지정
 const cities = ["Tokyo", "Berlin", "Moscow", "Seoul"];
 
@@ -24,6 +25,7 @@ function App() {
     let data = await response.json();
     setWeather(data);
     setLoading(false);
+    console.log(data);
   };
 
   // 선택한 city에 대한 날씨 정보
